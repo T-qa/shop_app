@@ -12,7 +12,9 @@ class ProductItem extends StatelessWidget {
         child: GridTile(
           footer: GridTileBar(
             trailing: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  
+                },
                 icon: const Icon(Icons.shopping_cart),
                 color: Theme.of(context).colorScheme.secondary),
             leading: Consumer<Product>(
