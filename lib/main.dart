@@ -4,6 +4,7 @@ import 'package:shop_app/screens/product_detail_screen.dart';
 import './screens/product_overview_screen.dart';
 import './provider/product_prodvider.dart';
 import './provider/cart.dart';
+import './screens/cart_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,7 +30,8 @@ class MyApp extends StatelessWidget {
                 .copyWith(secondary: Colors.deepOrange)),
         home: ProductOverviewScreen(),
         routes: {
-          ProductDetailScreen.routeName: (context) => ProductDetailScreen()
+          ProductDetailScreen.routeName: (context) => ProductDetailScreen(),
+          CartScreen.routeName:(context) => const CartScreen(),
         },
       ),
     );
