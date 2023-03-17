@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../provider/cart.dart';
+import '../provider/cart_provider.dart';
 import '../widgets/cart_product.dart';
+import '../provider/order_provider.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart';
 
-  const CartScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<Cart>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Cart'),
@@ -31,7 +30,7 @@ class CartScreen extends StatelessWidget {
                   const Spacer(),
                   Chip(
                     label: Text(
-                      '${cart.totalAmount}',
+                      '${cartProvider.totalAmount}',
                       style: TextStyle(
                         color: Theme.of(context).textTheme.titleMedium!.color,
                       ),
@@ -43,7 +42,12 @@ class CartScreen extends StatelessWidget {
                         backgroundColor: MaterialStateProperty.all<Color>(
                             Theme.of(context).primaryColor)),
                     child: const Text('ORDER NOW'),
-                    onPressed: () {},
+                    onPressed: () {
+                      Provider.of<OrderProvider>(context, listen: false)
+                          .addOrder(
+                              cartProvider.items.values.toList(), cartProvider.totalAmount);
+                      cartProvider.clearCart();
+                    },
                   )
                 ],
               ),
@@ -52,13 +56,13 @@ class CartScreen extends StatelessWidget {
           const SizedBox(height: 10),
           Expanded(
             child: ListView.builder(
-              itemCount: cart.items.length,
-              itemBuilder: (ctx, i) => CartProduct(
-                cart.items.values.toList()[i].id,
-                cart.items.keys.toList()[i],
-                cart.items.values.toList()[i].price,
-                cart.items.values.toList()[i].quantity,
-                cart.items.values.toList()[i].title,
+              itemCount: cartProvider.items.length,
+              itemBuilder: (context, index) => CartProduct(
+                cartProvider.items.values.toList()[index].id,
+                cartProvider.items.keys.toList()[index],
+                cartProvider.items.values.toList()[index].price,
+                cartProvider.items.values.toList()[index].quantity,
+                cartProvider.items.values.toList()[index].title,
               ),
             ),
           )
