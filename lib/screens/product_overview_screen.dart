@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../widgets/product_grid.dart';
 import '../widgets/badge.dart';
 import '../provider/cart_provider.dart';
+import '../widgets/drawer.dart';
 
 enum FilterOptions { favorites, all }
 
@@ -17,6 +18,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: MyDrawer(),
         appBar: AppBar(
           title: const Text('My Shop'),
           actions: [
@@ -52,6 +54,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
               ),
             )
           ],
+          
         ),
         body: ProductGrid(_showOnlyFavorites));
   }
