@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/order_item.dart';
@@ -12,6 +14,8 @@ class OrderProduct extends StatefulWidget {
 }
 
 class _OrderProductState extends State<OrderProduct> {
+  bool _expandalbe = false;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -25,9 +29,45 @@ class _OrderProductState extends State<OrderProduct> {
             ),
             trailing: IconButton(
               icon: const Icon(Icons.expand_more),
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  _expandalbe = !_expandalbe;
+                });
+              },
             ),
           ),
+          _expandalbe
+              ? Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+                  height: min(widget.orderItem.items.length * 20.0 + 10, 100),
+                  child: ListView(
+                    children: widget.orderItem.items
+                        .map(
+                          (product) => Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                product.title,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '${product.quantity}x \$${product.price}',
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.grey,
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                        .toList(),
+                  ),
+                )
+              : const Text('No items')
         ],
       ),
     );
