@@ -15,7 +15,18 @@ class ProductItem extends StatelessWidget {
         footer: GridTileBar(
           trailing: IconButton(
               onPressed: () {
-                cartProvider.addItem(selfProductProvider.id, selfProductProvider.price, selfProductProvider.title);
+                cartProvider.addItem(selfProductProvider.id,
+                    selfProductProvider.price, selfProductProvider.title);
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.purple,
+                    duration: const Duration(seconds: 2),
+                    action: SnackBarAction(
+                        label: 'Undo',
+                        onPressed: () {
+                          cartProvider.undoAddedItem(selfProductProvider.id);
+                        }),
+                    content: const Text('Sucessfully added new item')));
               },
               icon: const Icon(Icons.shopping_cart),
               color: Theme.of(context).colorScheme.secondary),
