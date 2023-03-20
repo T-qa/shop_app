@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Product with ChangeNotifier {
   final String id;
@@ -16,8 +18,28 @@ class Product with ChangeNotifier {
       required this.imageUrl,
       this.isFavorite = false});
 
-  void toggleFavorite() {
+  void setFavoriteStatus(bool newFavoriteStatus) {
+    isFavorite = newFavoriteStatus;
+    notifyListeners();
+  }
+
+  Future<void> toggleFavorite() async {
+    var oldStatus = isFavorite;
     isFavorite = !isFavorite;
     notifyListeners();
+
+    var url = Uri.https(
+        'https://swift-fabric-338810-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id');
+    try {
+      var response =
+          await http.patch(url, body: json.encode({'isFavorite': isFavorite}));
+
+      if (response.statusCode >= 400) {
+        setFavoriteStatus(oldStatus);
+        notifyListeners();
+      }
+    } catch (error) {
+      setFavoriteStatus(oldStatus);
+    }
   }
 }

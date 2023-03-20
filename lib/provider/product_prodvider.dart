@@ -10,9 +10,9 @@ class ProductProvider with ChangeNotifier {
         'https://swift-fabric-338810-default-rtdb.asia-southeast1.firebasedatabase.app/products');
     try {
       final response = await http.get(url);
-      final extractData = json.decode(response.body) as Map<String, dynamic>;
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
       final List<Product> newList = [];
-      extractData.forEach((productId, productData) {
+      extractedData.forEach((productId, productData) {
         newList.add(Product(
             id: productId,
             title: productData['title'],

@@ -42,7 +42,7 @@ class CartScreen extends StatelessWidget {
                         backgroundColor: MaterialStateProperty.all<Color>(
                             Theme.of(context).primaryColor)),
                     child: const Text('ORDER NOW'),
-                    onPressed: () {
+                    onPressed: cartProvider.totalAmount <= 0 ? null : () {
                       Provider.of<OrderProvider>(context, listen: false)
                           .addOrder(
                               cartProvider.items.values.toList(), cartProvider.totalAmount);
