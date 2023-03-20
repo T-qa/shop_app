@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/product.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../models/http_exception.dart';
 
 class ProductProvider with ChangeNotifier {
   Future<void> fetchData() async {
@@ -91,13 +92,12 @@ class ProductProvider with ChangeNotifier {
     Product? existingProd = _items[existingProdIndex];
     _items.removeAt(existingProdIndex);
     notifyListeners();
-
-    http.delete(url).then((response) {
-      if(response.statusCode >= 400) {}
-      existingProd = null;
-    }).catchError((_) {
-      _items.insert(existingProdIndex, existingProd!);
+    final response = await http.delete(url);
+    if (response.statusCode >= 400) {
+      _items.insert(existingProdIndex, existingProd);
       notifyListeners();
-    });
+      throw HttpException('Could not delete product.');
+    }
+    existingProd = null;
   }
 }
