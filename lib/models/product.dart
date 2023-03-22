@@ -28,8 +28,8 @@ class Product with ChangeNotifier {
     isFavorite = !isFavorite;
     notifyListeners();
 
-    var url = Uri.https(
-        'https://swift-fabric-338810-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id');
+    var url = Uri.parse(
+        'https://flutter-shop-66a13-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id.json');
     try {
       var response =
           await http.patch(url, body: json.encode({'isFavorite': isFavorite}));

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/screens/user_products_screen.dart';
 import '../screens/order_screen.dart';
 import '../screens/product_edit_screen.dart';
 
@@ -36,7 +37,7 @@ class MyDrawer extends StatelessWidget {
             leading: const Icon(Icons.edit),
             title: const Text('Manage Products'),
             onTap: () {
-              Navigator.of(context).pushNamed(EditProductScreen.routeName);
+              Navigator.of(context).pushNamed(UserProductsScreen.routeName);
             },
           ),
         ],

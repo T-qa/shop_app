@@ -6,19 +6,21 @@ import '../models/http_exception.dart';
 
 class ProductProvider with ChangeNotifier {
   Future<void> fetchData() async {
-    var url = Uri.https(
-        'https://swift-fabric-338810-default-rtdb.asia-southeast1.firebasedatabase.app/products');
+    var url = Uri.parse(
+        'https://flutter-shop-66a13-default-rtdb.asia-southeast1.firebasedatabase.app/products.json');
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       final List<Product> newList = [];
       extractedData.forEach((productId, productData) {
         newList.add(Product(
-            id: productId,
-            title: productData['title'],
-            description: productData['description'],
-            price: productData['price'],
-            imageUrl: productData['imageUrl']));
+          description: productData['description'],
+          imageUrl: productData['imageUrl'],
+          isFavorite: productData['isFavorite'],
+          price: productData['price'],
+          title: productData['title'],
+          id: productId,
+        ));
       });
       _items = newList;
       notifyListeners();
@@ -42,8 +44,8 @@ class ProductProvider with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) async {
-    var url = Uri.https(
-        'https://swift-fabric-338810-default-rtdb.asia-southeast1.firebasedatabase.app/products');
+    var url = Uri.parse(
+        'https://flutter-shop-66a13-default-rtdb.asia-southeast1.firebasedatabase.app/products.json');
     try {
       var response = await http.post(url,
           body: json.encode({
@@ -69,8 +71,8 @@ class ProductProvider with ChangeNotifier {
   }
 
   Future<void> updateProduct(String id, Product newProduct) async {
-    var url = Uri.https(
-        'https://swift-fabric-338810-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id');
+    var url = Uri.parse(
+        'https://flutter-shop-66a13-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id.json');
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
       await http.patch(url,
@@ -86,8 +88,8 @@ class ProductProvider with ChangeNotifier {
   }
 
   Future<void> deleteProduct(String id) async {
-    var url = Uri.https(
-        'https://swift-fabric-338810-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id');
+    var url = Uri.parse(
+        'https://flutter-shop-66a13-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id.json');
     final existingProdIndex = _items.indexWhere((product) => product.id == id);
     Product? existingProd = _items[existingProdIndex];
     _items.removeAt(existingProdIndex);

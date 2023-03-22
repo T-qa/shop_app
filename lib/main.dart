@@ -9,11 +9,9 @@ import './provider/order_provider.dart';
 import './screens/order_screen.dart';
 import './screens/product_edit_screen.dart';
 import './screens/user_products_screen.dart';
-
 void main() {
   runApp(MyApp());
 }
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

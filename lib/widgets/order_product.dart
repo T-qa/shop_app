@@ -14,7 +14,7 @@ class OrderProduct extends StatefulWidget {
 }
 
 class _OrderProductState extends State<OrderProduct> {
-  bool _expandalbe = false;
+  bool _expandable = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +31,12 @@ class _OrderProductState extends State<OrderProduct> {
               icon: const Icon(Icons.expand_more),
               onPressed: () {
                 setState(() {
-                  _expandalbe = !_expandalbe;
+                  _expandable = !_expandable;
                 });
               },
             ),
           ),
-          _expandalbe
+          _expandable
               ? Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 4),

@@ -12,7 +12,7 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
-  Future? _orderFuture;
+  Future? _futureOrder;
   Future _obtainOrderFuture() {
     return Provider.of<OrderProvider>(context, listen: false)
         .fetchAndSetOrders();
@@ -20,7 +20,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   @override
   void initState() {
-    _orderFuture = _obtainOrderFuture();
+    _futureOrder = _obtainOrderFuture();
     super.initState();
   }
 
@@ -32,7 +32,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
         title: const Text('Your Orders'),
       ),
       body: FutureBuilder(
-        future: _orderFuture,
+        future: _futureOrder,
         builder: (ctx, dataSnapshot) {
           if (dataSnapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -47,7 +47,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
               return Consumer<OrderProvider>(
                 builder: (ctx, orderData, child) => ListView.builder(
                   itemCount: orderData.orders.length,
-                  itemBuilder: (ctx, i) => OrderProduct(orderData.orders[i]),
+                  itemBuilder: (context, index) => OrderProduct(orderData.orders[index]),
                 ),
               );
             }

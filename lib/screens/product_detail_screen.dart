@@ -8,11 +8,11 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productId = ModalRoute.of(context)?.settings.arguments as String;
-    final loadedProduct = Provider.of<ProductProvider>(context, listen: false)
+    final singleProduct = Provider.of<ProductProvider>(context, listen: false)
         .findById(productId);
     return Scaffold(
       appBar: AppBar(
-        title: Text(loadedProduct.title),
+        title: Text(singleProduct.title),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -21,13 +21,13 @@ class ProductDetailScreen extends StatelessWidget {
               height: 300,
               width: double.infinity,
               child: Image.network(
-                loadedProduct.imageUrl,
+                singleProduct.imageUrl,
                 fit: BoxFit.cover,
               ),
             ),
             const SizedBox(height: 10),
             Text(
-              '\$${loadedProduct.price}',
+              '\$${singleProduct.price}',
               style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 20,
@@ -40,7 +40,7 @@ class ProductDetailScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               width: double.infinity,
               child: Text(
-                loadedProduct.description,
+                singleProduct.description,
                 textAlign: TextAlign.center,
                 softWrap: true,
               ),

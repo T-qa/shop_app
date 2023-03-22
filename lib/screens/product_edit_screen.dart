@@ -42,7 +42,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     if (_isInit) {
       final productId = ModalRoute.of(context)!.settings.arguments as String;
       if (productId != null) {
-        final _editedProduct =
+         _editedProduct =
             Provider.of<ProductProvider>(context, listen: false)
                 .findById(productId);
         _initValues = {
@@ -251,7 +251,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         ),
                         Expanded(
                           child: TextFormField(
-                            initialValue: _initValues['imageUrl'],
                             decoration:
                                 const InputDecoration(labelText: 'Image URL'),
                             keyboardType: TextInputType.url,

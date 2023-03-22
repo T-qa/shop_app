@@ -7,7 +7,7 @@ import '../provider/cart_provider.dart';
 class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final selfProductProvider = Provider.of<Product>(context, listen: false);
+    final singleProductProvider = Provider.of<Product>(context, listen: false);
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
@@ -15,8 +15,8 @@ class ProductItem extends StatelessWidget {
         footer: GridTileBar(
           trailing: IconButton(
               onPressed: () {
-                cartProvider.addItem(selfProductProvider.id,
-                    selfProductProvider.price, selfProductProvider.title);
+                cartProvider.addItem(singleProductProvider.id,
+                    singleProductProvider.price, singleProductProvider.title);
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.purple,
@@ -24,7 +24,7 @@ class ProductItem extends StatelessWidget {
                     action: SnackBarAction(
                         label: 'Undo',
                         onPressed: () {
-                          cartProvider.undoAddedItem(selfProductProvider.id);
+                          cartProvider.undoAddedItem(singleProductProvider.id);
                         }),
                     content: const Text('Sucessfully added new item')));
               },
@@ -42,17 +42,17 @@ class ProductItem extends StatelessWidget {
           ),
           backgroundColor: Colors.black54,
           title: Text(
-            selfProductProvider.title,
+            singleProductProvider.title,
             textAlign: TextAlign.center,
           ),
         ),
         child: GestureDetector(
           onTap: () {
             Navigator.of(context).pushNamed(ProductDetailScreen.routeName,
-                arguments: selfProductProvider.id);
+                arguments: singleProductProvider.id);
           },
           child: Image.network(
-            selfProductProvider.imageUrl,
+            singleProductProvider.imageUrl,
             fit: BoxFit.cover,
           ),
         ),

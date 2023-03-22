@@ -12,8 +12,8 @@ class OrderProvider with ChangeNotifier {
   }
 
   Future<void> fetchAndSetOrders() async {
-    var url = Uri.https(
-        'https://swift-fabric-338810-default-rtdb.asia-southeast1.firebasedatabase.app/orders');
+    var url = Uri.parse(
+        'https://flutter-shop-66a13-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json');
     final response = await http.get(url);
     final List<OrderItem> loadedOrders = [];
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -22,8 +22,8 @@ class OrderProvider with ChangeNotifier {
         OrderItem(
           id: orderId,
           amount: orderData['amount'],
-          date: DateTime.parse(orderData['dateTime']),
-          items: (orderData['products'] as List<dynamic>)
+          date: DateTime.parse(orderData['date']),
+          items: (orderData['items'] as List<dynamic>)
               .map(
                 (item) => CartItem(
                   id: item['id'],
@@ -41,10 +41,10 @@ class OrderProvider with ChangeNotifier {
   }
 
   Future<void> addOrder(List<CartItem> cartItems, double total) async {
-    var url = Uri.https(
-        'https://swift-fabric-338810-default-rtdb.asia-southeast1.firebasedatabase.app/orders');
+    var url = Uri.parse(
+        'https://flutter-shop-66a13-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json');
     final timeStamp = DateTime.now();
-    final response = await http.post(url, body: {
+    final response = await http.post(url, body: json.encode({
       'amount': total,
       'date': timeStamp.toIso8601String(),
       'items': cartItems
@@ -55,7 +55,8 @@ class OrderProvider with ChangeNotifier {
                 'price': cartItem.price,
               })
           .toList(),
-    });
+    })
+    );
     _orders.insert(
         0,
         OrderItem(
