@@ -9,9 +9,12 @@ import './provider/order_provider.dart';
 import './screens/order_screen.dart';
 import './screens/product_edit_screen.dart';
 import './screens/user_products_screen.dart';
+import './screens/auth_screen.dart';
+
 void main() {
   runApp(MyApp());
 }
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -30,16 +33,21 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'My Shop',
         theme: ThemeData(
-            fontFamily: 'Lato',
-            colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
-                .copyWith(secondary: Colors.deepOrange)),
-        home: ProductOverviewScreen(),
+          textTheme: TextTheme(
+              bodyLarge: TextStyle(
+                color: Theme.of(context).canvasColor)),
+          fontFamily: 'Lato',
+          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
+              .copyWith(secondary: Colors.deepOrange),
+        ),
+        home: AuthScreen(),
         routes: {
           ProductDetailScreen.routeName: (context) => ProductDetailScreen(),
           CartScreen.routeName: (context) => CartScreen(),
           OrdersScreen.routeName: (context) => OrdersScreen(),
           EditProductScreen.routeName: (context) => EditProductScreen(),
-          UserProductsScreen.routeName:(context) => UserProductsScreen(),
+          UserProductsScreen.routeName: (context) => UserProductsScreen(),
+          AuthScreen.routeName: (context) => AuthScreen(),
         },
       ),
     );
